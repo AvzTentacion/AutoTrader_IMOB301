@@ -2,22 +2,21 @@ package com.example.autotrader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 public class MainActivity extends AppCompatActivity {
 
-    private TextInputEditText etUsername, etPassword;
-    private Button            btnSignIn;
-    private TextView          txtSignup;
-    private DatabaseHelper    db;
+    TextView signupText;
+    EditText txtAdminName, txtAdminPass;
+    Button signinBtn;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,57 +24,75 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        db          = new DatabaseHelper(this);
-        etUsername  = findViewById(R.id.IDtxtAdmin);
-        etPassword  = findViewById(R.id.passtxtAdmin);
-        btnSignIn   = findViewById(R.id.SigninBtn);
-        txtSignup   = findViewById(R.id.txtSignup);
+        db = new DatabaseHelper(this);
 
-        btnSignIn.setOnClickListener(v -> attemptLogin());
+        signupText   = findViewById(R.id.txtSignup);
+        signinBtn    = findViewById(R.id.SigninBtn);
+        txtAdminName = findViewById(R.id.IDtxtAdmin);
+        txtAdminPass = findViewById(R.id.passtxtAdmin);
 
-        txtSignup.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, Signup.class)));
-    }
+        // ── Sign In ──────────────────────────────────────────────────────────
+        signinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = txtAdminName.getText().toString().trim();
+                String password = txtAdminPass.getText().toString().trim();
 
-    private void attemptLogin() {
-        String username = etUsername.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+                // Basic input validation
+                if (username.isEmpty()) {
+                    txtAdminName.setError("Username is required");
+                    txtAdminName.requestFocus();
+                    return;
+                }
+                if (password.isEmpty()) {
+                    txtAdminPass.setError("Password is required");
+                    txtAdminPass.requestFocus();
+                    return;
+                }
 
-        if (TextUtils.isEmpty(username)) {
-            etUsername.setError("Username is required");
-            etUsername.requestFocus();
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password is required");
-            etPassword.requestFocus();
-            return;
-        }
+                // Check credentials against DB
+                String role = db.loginUser(username, password);
 
-        String role = db.loginUser(username, password);
+                if (role == null) {
+                    Toast.makeText(MainActivity.this,
+                            "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        if (role == null) {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-            return;
-        }
+                // Route to the correct dashboard based on role
+                Intent intent;
+                switch (role) {
+                    case "admin":
+                        intent = new Intent(MainActivity.this, MenuActivity.class);
+                        break;
+                    case "mechanic":
+                        intent = new Intent(MainActivity.this, MenuActivity.class);
+                        break;
+                    case "customer":
+                        intent = new Intent(MainActivity.this, MenuActivity.class);
+                        break;
+                    default:
+                        Toast.makeText(MainActivity.this,
+                                "Unknown role, contact admin", Toast.LENGTH_SHORT).show();
+                        return;
+                }
 
-        Toast.makeText(this, "Welcome, " + username + "!", Toast.LENGTH_SHORT).show();
+                // Pass the role and username through so the next screen knows who logged in
+                intent.putExtra("role", role);
+                intent.putExtra("username", username);
+                Toast.makeText(MainActivity.this,
+                        "Welcome, " + username + "!", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish(); // prevent going back to login with back button
+            }
+        });
 
-        Intent intent;
-        switch (role) {
-            case "admin":
-                intent = new Intent(this, MenuActivity.class);
-                break;
-            case "mechanic":
-                intent = new Intent(this, MechanicDashboardActivity.class);
-                break;
-            default:
-                intent = new Intent(this, CustomerDashboardActivity.class);
-                intent.putExtra("linkedId", db.getLinkedId(username));
-                break;
-        }
-        intent.putExtra("username", username);
-        startActivity(intent);
-        finish();
+        // ── Go to Sign Up ─────────────────────────────────────────────────────
+        signupText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Signup.class));
+            }
+        });
     }
 }
