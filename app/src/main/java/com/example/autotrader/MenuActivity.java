@@ -2,7 +2,7 @@ package com.example.autotrader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -18,23 +18,30 @@ public class MenuActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
 
-        MaterialButton btnAddCustomer   = findViewById(R.id.Button);
-        MaterialButton btnAddVehicle    = findViewById(R.id.Button2);
-        MaterialButton btnAddMechanic   = findViewById(R.id.Button3);
-        MaterialButton btnCreateBooking = findViewById(R.id.Button4);
-        MaterialButton btnViewBookings  = findViewById(R.id.Button5);
-        MaterialButton btnLogout        = findViewById(R.id.btnLogout);
+        // These are LinearLayouts in your XML, NOT MaterialButtons
+        LinearLayout btnAddCustomer   = findViewById(R.id.Button);
+        LinearLayout btnAddVehicle    = findViewById(R.id.Button2);
+        LinearLayout btnViewBookings  = findViewById(R.id.Button3);
+        LinearLayout btnAddMechanic   = findViewById(R.id.Button4);
+        LinearLayout btnCreateBooking = findViewById(R.id.Button5);
+
+        // This one IS a MaterialButton in your XML
+        MaterialButton btnLogout = findViewById(R.id.btnLogout);
 
         btnAddCustomer.setOnClickListener(v ->
-                Toast.makeText(this, "Add Customer – coming soon", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, AddCustomerActivity.class)));
+
         btnAddVehicle.setOnClickListener(v ->
-                Toast.makeText(this, "Add Vehicle – coming soon", Toast.LENGTH_SHORT).show());
-        btnAddMechanic.setOnClickListener(v ->
-                Toast.makeText(this, "Add Mechanic – coming soon", Toast.LENGTH_SHORT).show());
-        btnCreateBooking.setOnClickListener(v ->
-                Toast.makeText(this, "Create Booking – coming soon", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, AddVehicleActivity.class)));
+
         btnViewBookings.setOnClickListener(v ->
-                Toast.makeText(this, "View Bookings – coming soon", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, ViewBookingsActivity.class)));
+
+        btnAddMechanic.setOnClickListener(v ->
+                startActivity(new Intent(this, AddMechanicActivity.class)));
+
+        btnCreateBooking.setOnClickListener(v ->
+                startActivity(new Intent(this, CreateBookingActivity.class)));
 
         btnLogout.setOnClickListener(v -> confirmLogout());
     }
