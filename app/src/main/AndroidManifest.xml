@@ -11,43 +11,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AutoTrader">
-
-        <!-- Splash is the launcher -->
+        <activity
+            android:name=".just_checking"
+            android:exported="false" />
+        <activity
+            android:name=".View_Booking"
+            android:exported="false" />
+        <activity
+            android:name=".Update_service"
+            android:exported="false" />
+        <activity
+            android:name=".Add_booking"
+            android:exported="false" /> <!-- Splash is the launcher -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Login -->
+        </activity> <!-- Login -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-
-        <!-- Sign Up -->
+            android:exported="false" /> <!-- Sign Up -->
         <activity
             android:name=".Signup"
-            android:exported="false" />
-
-        <!-- Admin Dashboard -->
+            android:exported="false" /> <!-- Admin Dashboard -->
         <activity
             android:name=".MenuActivity"
-            android:exported="false" />
-
-        <!-- Mechanic Dashboard -->
+            android:exported="false" /> <!-- Mechanic Dashboard -->
         <activity
             android:name=".MechanicDashboardActivity"
-            android:exported="false" />
-
-        <!-- Customer Dashboard -->
+            android:exported="false" /> <!-- Customer Dashboard -->
         <activity
             android:name=".CustomerDashboardActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

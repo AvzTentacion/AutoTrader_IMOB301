@@ -98,8 +98,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues admin = new ContentValues();
         admin.put(COL_USERNAME, "admin");
         admin.put(COL_PASSWORD, "admin123");
-        admin.put(COL_ROLE,     "admin");
+        admin.put(COL_ROLE, "admin");
         db.insert(TABLE_USERS, null, admin);
+
+        ContentValues Mechanic = new ContentValues();
+        admin.put(COL_USERNAME, "mambo");
+        admin.put(COL_PASSWORD, "mambo123");
+        admin.put(COL_ROLE,     "Mechanic");
+        db.insert(TABLE_USERS, null, Mechanic);
     }
 
     @Override

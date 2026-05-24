@@ -2,6 +2,7 @@ package com.example.autotrader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +31,31 @@ public class MechanicDashboardActivity extends AppCompatActivity {
         MaterialButton btnUpdateStatus  = findViewById(R.id.btnUpdateStatus);
         MaterialButton btnLogout        = findViewById(R.id.btnLogout);
 
-        btnCreateBooking.setOnClickListener(v ->
-                Toast.makeText(this, "Create Booking – coming soon", Toast.LENGTH_SHORT).show());
-        btnViewAssigned.setOnClickListener(v ->
-                Toast.makeText(this, "View Assigned – coming soon", Toast.LENGTH_SHORT).show());
-        btnUpdateStatus.setOnClickListener(v ->
-                Toast.makeText(this, "Update Status – coming soon", Toast.LENGTH_SHORT).show());
+        btnCreateBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MechanicDashboardActivity.this, Add_booking.class);
+                startActivity(intent);
+            }
+        });
+
+                //Toast.makeText(this, "Create Booking – coming soon", Toast.LENGTH_SHORT).show());
+        btnViewAssigned.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MechanicDashboardActivity.this, View_Booking.class);
+                startActivity(intent);
+            }
+        });
+                //Toast.makeText(this, "View Assigned – coming soon", Toast.LENGTH_SHORT).show());
+        btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MechanicDashboardActivity.this, Update_service.class);
+                startActivity(intent);
+            }
+        });
+                //Toast.makeText(this, "Update Status – coming soon", Toast.LENGTH_SHORT).show());
 
         btnLogout.setOnClickListener(v -> confirmLogout());
     }

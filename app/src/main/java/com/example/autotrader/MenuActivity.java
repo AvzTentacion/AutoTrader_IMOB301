@@ -18,11 +18,11 @@ public class MenuActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
 
-        MaterialButton btnAddCustomer   = findViewById(R.id.button);
-        MaterialButton btnAddVehicle    = findViewById(R.id.button2);
-        MaterialButton btnAddMechanic   = findViewById(R.id.button3);
-        MaterialButton btnCreateBooking = findViewById(R.id.button4);
-        MaterialButton btnViewBookings  = findViewById(R.id.button5);
+        MaterialButton btnAddCustomer   = findViewById(R.id.Button);
+        MaterialButton btnAddVehicle    = findViewById(R.id.Button2);
+        MaterialButton btnAddMechanic   = findViewById(R.id.Button3);
+        MaterialButton btnCreateBooking = findViewById(R.id.Button4);
+        MaterialButton btnViewBookings  = findViewById(R.id.Button5);
         MaterialButton btnLogout        = findViewById(R.id.btnLogout);
 
         btnAddCustomer.setOnClickListener(v ->
